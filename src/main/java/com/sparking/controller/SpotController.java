@@ -3,6 +3,7 @@ package com.sparking.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.map.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,11 +67,13 @@ public class SpotController {
 	
 	@RequestMapping(value = "/getAllSpots", method = RequestMethod.GET)
 	@ResponseBody
-	public Object getAllSpots() {
+	public JSONPObject getAllSpots(@RequestParam("callback") String jsonpCallback) {
 		
 		
 	//	List<Object> resultArray = new ArrayList<Object>();
-		return sparkService.getAllSpots("","");
+		System.out.println("Spots all:"+sparkService.getAllSpots("","").toString());
+		return new JSONPObject(jsonpCallback, sparkService.getAllSpots("",""));
+		//return sparkService.getAllSpots("","");
 		//return resultArray;
 		
 	}

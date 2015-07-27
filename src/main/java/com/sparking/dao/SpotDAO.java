@@ -70,7 +70,7 @@ public class SpotDAO {
 		try{
 			
 			log.info("Listing all spots");
-			String hql = "FROM Spot where spotBooked is null";
+			String hql = "FROM Spot where spotBooked = ''";
 			resultList = sessionFactory.getCurrentSession().createQuery(hql).list();
 			
 		}catch (Exception e) {
