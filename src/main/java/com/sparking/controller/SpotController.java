@@ -3,6 +3,9 @@ package com.sparking.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.codehaus.jackson.map.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -78,9 +81,9 @@ public class SpotController {
 		
 	}
 	
-	@RequestMapping(value = "/saveUser", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveUser", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON)
 	@ResponseBody
-	public Object saveUser(@RequestBody User user) {
+	public Response saveUser(@RequestBody User user) {
 		
 		List<Object> resultArray = new ArrayList<Object>();
 		Integer userID = sparkService.saveUser(user);
@@ -88,13 +91,22 @@ public class SpotController {
 	
 		if(user != null) {
 			status = "OK";
+			
 			resultArray.add(status);
 			resultArray.add(userID);
+			
 		}else{
 			status = "FAIL";
 		}
 		
-		return resultArray;
+	
+		return Response.ok(resultArray).header("Access-Control-Allow-Origin", "*")
+			      .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
+			      .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
+			      .header( "AccessControlAllowCredentials", true)
+		            .build();
+
+ 
 	}
 	
 
