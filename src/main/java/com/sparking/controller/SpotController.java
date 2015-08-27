@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Variant;
 
 import org.codehaus.jackson.map.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,22 +90,24 @@ public class SpotController {
 		Integer userID = sparkService.saveUser(user);
 		String status;
 	
-		if(user != null) {
+		if(userID != 0) {
 			status = "OK";
 			
 			resultArray.add(status);
 			resultArray.add(userID);
+			return Response.ok(resultArray).header("Access-Control-Allow-Origin", "*")
+				      .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
+				      .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
+				      .header( "AccessControlAllowCredentials", true)
+			            .build();
 			
 		}else{
 			status = "FAIL";
+			return Response.serverError().entity("Spot already booked").build();
 		}
 		
 	
-		return Response.ok(resultArray).header("Access-Control-Allow-Origin", "*")
-			      .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
-			      .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
-			      .header( "AccessControlAllowCredentials", true)
-		            .build();
+		
 
  
 	}
