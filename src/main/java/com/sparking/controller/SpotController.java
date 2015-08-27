@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Variant;
 
 import org.codehaus.jackson.map.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +91,7 @@ public class SpotController {
 		String status;
 		Integer SpotBooked=0;
 	
-		if(user != null && userID!=SpotBooked ) {
+		if(userID != 0) {
 			status = "OK";
 			resultArray.add(status);
 			resultArray.add(userID);
@@ -101,14 +102,10 @@ public class SpotController {
 			            .build();
 		}else{
 			status = "FAIL";
+			return Response.serverError().entity("Spot already booked").build();
 		}
 		
 	
-		return Response.serverError().header("Access-Control-Allow-Origin", "*")
-			      .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
-			      .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
-			      .header( "AccessControlAllowCredentials", true)
-		            .build();
 
  
 	}

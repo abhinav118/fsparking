@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sparking.dao.SpotDAO;
 import com.sparking.dao.UserDAO;
+import com.sparking.exception.SpotAlreadyBookedException;
 import com.sparking.hibernate.Spot;
 import com.sparking.hibernate.StreetSegements;
 import com.sparking.hibernate.User;
@@ -95,16 +96,18 @@ public class SparkServiceImpl implements SparkService {
 	}
 	
 	public Integer saveUser(User user) {
-		Integer userId=userDAO.saveUser(user);
-		System.out.println("logging user spotid: "+user.toString());
-		if(user.getSpotId()==null || user.getSpotId().isEmpty()||user.getSpotId().equals("null"))
-			return 1;//owner spot id
+		int returnCode = 0;
+		try{
+			
+		userDAO.saveUser(user);
 		Spot spot=spotDAO.getSpotById(Integer.parseInt(user.getSpotId()));
 		if(spot.getSpotBooked()==null||spot.getSpotBooked().isEmpty())
-			return spotDAO.bookSpot(spot);
-		else
-			return 0;
-		
+			returnCode =  spotDAO.bookSpot(spot);
+		}catch(SpotAlreadyBookedException spotBooked){
+			System.out.println("Spot already booked");
+		}catch(Exception e){
+		}
+		return returnCode;
 	}
 
 }
