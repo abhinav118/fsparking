@@ -89,7 +89,6 @@ public class SpotController {
 		List<Object> resultArray = new ArrayList<Object>();
 		Integer userID = sparkService.saveUser(user);
 		String status;
-		Integer SpotBooked=0;
 	
 		if(userID != 0) {
 			status = "OK";
