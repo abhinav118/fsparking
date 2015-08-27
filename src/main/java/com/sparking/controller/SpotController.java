@@ -88,19 +88,23 @@ public class SpotController {
 		List<Object> resultArray = new ArrayList<Object>();
 		Integer userID = sparkService.saveUser(user);
 		String status;
+		Integer SpotBooked=0;
 	
-		if(user != null) {
+		if(user != null && userID!=SpotBooked ) {
 			status = "OK";
-			
 			resultArray.add(status);
 			resultArray.add(userID);
-			
+			return Response.ok(resultArray).header("Access-Control-Allow-Origin", "*")
+				      .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
+				      .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
+				      .header( "AccessControlAllowCredentials", true)
+			            .build();
 		}else{
 			status = "FAIL";
 		}
 		
 	
-		return Response.ok(resultArray).header("Access-Control-Allow-Origin", "*")
+		return Response.serverError().header("Access-Control-Allow-Origin", "*")
 			      .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
 			      .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
 			      .header( "AccessControlAllowCredentials", true)

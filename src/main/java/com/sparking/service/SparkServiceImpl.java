@@ -96,6 +96,9 @@ public class SparkServiceImpl implements SparkService {
 	
 	public Integer saveUser(User user) {
 		Integer userId=userDAO.saveUser(user);
+		System.out.println("logging user spotid: "+user.toString());
+		if(user.getSpotId()==null || user.getSpotId().isEmpty()||user.getSpotId().equals("null"))
+			return 1;//owner spot id
 		Spot spot=spotDAO.getSpotById(Integer.parseInt(user.getSpotId()));
 		if(spot.getSpotBooked()==null||spot.getSpotBooked().isEmpty())
 			return spotDAO.bookSpot(spot);
