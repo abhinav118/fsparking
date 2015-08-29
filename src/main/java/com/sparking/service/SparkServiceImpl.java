@@ -103,9 +103,12 @@ public class SparkServiceImpl implements SparkService {
 		Spot spot=spotDAO.getSpotById(Integer.parseInt(user.getSpotId()));
 		if(spot.getSpotBooked()==null||spot.getSpotBooked().isEmpty())
 			returnCode =  spotDAO.bookSpot(spot);
+		else
+			System.out.println("Spot already booked");
 		}catch(SpotAlreadyBookedException spotBooked){
 			System.out.println("Spot already booked");
 		}catch(Exception e){
+			System.out.println("Exception while saving spot" + e);
 		}
 		return returnCode;
 	}
