@@ -31,13 +31,13 @@ public class SpotDAO {
 		
 		Integer spotId = null;
 		try{
-			if(isValidSpot(spot)) {
+//			if(isValidSpot(spot)) {
 				log.info("Saving spot");
 				
 				spotId = (Integer) sessionFactory.getCurrentSession().save(spot);
-			}else{
-				log.info("Spot is null or one or more of it properties are null or not set");
-			}
+//			}else{
+//				log.info("Spot is null or one or more of it properties are null or not set");
+//			}
  			
 		}catch (Exception e) {
 			log.debug("Exception occured while saving spot");
@@ -48,22 +48,6 @@ public class SpotDAO {
 	}
 	
 	
-//public Integer saveUser(User user) {
-//		
-//		Integer userId = null;
-//		try{
-//					
-//				userId = (Integer) userSessionFactory.getCurrentSession().save(user);
-//			
-// 			
-//		}catch (Exception e) {
-//			log.debug("Exception occured while saving spot");
-//			e.printStackTrace();
-//		}
-//		
-//		return userId;
-//	}
-//	
 	@SuppressWarnings("unchecked")
 	public List<Spot> getAllSpots() {
 		List<Spot> resultList = null;

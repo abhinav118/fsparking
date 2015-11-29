@@ -1,6 +1,5 @@
 package com.sparking.hibernate;
-
-// Generated Apr 23, 2015 9:36:06 PM by Hibernate Tools 3.4.0.CR1
+// Generated Nov 15, 2015 4:44:16 PM by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +15,10 @@ import javax.persistence.Table;
 @Table(name = "Spot", catalog = "spark")
 public class Spot implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer spotId;
 	private String address1;
 	private String address2;
@@ -27,28 +30,43 @@ public class Spot implements java.io.Serializable {
 	private String rateMonthly;
 	private String description;
 	private Integer carSize;
-	private Double x1;
-	private Double y1;
 	private String image;
+	private Long x1;
+	private Long y1;
 	private String spotBooked;
+	private Integer count;
+	private String neighborhood;
+	private int spotOwnerUserId;
 
 	public Spot() {
 	}
 
-	public Spot(String address1, String city, String state, String zip,
-			String spotType, String rateHr, String rateMonthly) {
-		this.address1 = address1;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
-		this.spotType = spotType;
-		this.rateHr = rateHr;
-		this.rateMonthly = rateMonthly;
+	public Spot(int spotOwnerUserId) {
+		this.spotOwnerUserId = spotOwnerUserId;
 	}
-
-	public Spot(String address1, String address2, String city, String state,
-			String zip, String spotType, String rateHr, String rateMonthly,
-			String description, Integer carSize, Double x1, Double y1) {
+	/**
+	 * Spot object returned
+	 * @param address1
+	 * @param address2
+	 * @param city
+	 * @param state
+	 * @param zip
+	 * @param spotType
+	 * @param rateHr
+	 * @param rateMonthly
+	 * @param description
+	 * @param carSize
+	 * @param image
+	 * @param x1
+	 * @param y1
+	 * @param spotBooked
+	 * @param count
+	 * @param neighborhood
+	 * @param spotOwnerUserId
+	 */
+	public Spot(String address1, String address2, String city, String state, String zip, String spotType, String rateHr,
+			String rateMonthly, String description, Integer carSize, String image, Long x1, Long y1, String spotBooked,
+			Integer count, String neighborhood, int spotOwnerUserId) {
 		this.address1 = address1;
 		this.address2 = address2;
 		this.city = city;
@@ -59,13 +77,18 @@ public class Spot implements java.io.Serializable {
 		this.rateMonthly = rateMonthly;
 		this.description = description;
 		this.carSize = carSize;
-		this.x1=x1;
-		this.y1=y1;
+		this.image = image;
+		this.x1 = x1;
+		this.y1 = y1;
+		this.spotBooked = spotBooked;
+		this.count = count;
+		this.neighborhood = neighborhood;
+		this.spotOwnerUserId = spotOwnerUserId;
 	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "SpotId", unique = true, nullable = false)
+	@Column(name = "spotId", unique = true, nullable = false)
 	public Integer getSpotId() {
 		return this.spotId;
 	}
@@ -74,7 +97,7 @@ public class Spot implements java.io.Serializable {
 		this.spotId = spotId;
 	}
 
-	@Column(name = "Address1", nullable = false, length = 100)
+	@Column(name = "address1", length = 45)
 	public String getAddress1() {
 		return this.address1;
 	}
@@ -83,7 +106,7 @@ public class Spot implements java.io.Serializable {
 		this.address1 = address1;
 	}
 
-	@Column(name = "Address2", length = 100)
+	@Column(name = "address2", length = 45)
 	public String getAddress2() {
 		return this.address2;
 	}
@@ -92,7 +115,7 @@ public class Spot implements java.io.Serializable {
 		this.address2 = address2;
 	}
 
-	@Column(name = "City", nullable = false, length = 45)
+	@Column(name = "city", length = 45)
 	public String getCity() {
 		return this.city;
 	}
@@ -101,7 +124,7 @@ public class Spot implements java.io.Serializable {
 		this.city = city;
 	}
 
-	@Column(name = "State", nullable = false, length = 45)
+	@Column(name = "state", length = 45)
 	public String getState() {
 		return this.state;
 	}
@@ -110,7 +133,7 @@ public class Spot implements java.io.Serializable {
 		this.state = state;
 	}
 
-	@Column(name = "Zip", nullable = false, length = 45)
+	@Column(name = "zip", length = 45)
 	public String getZip() {
 		return this.zip;
 	}
@@ -119,7 +142,7 @@ public class Spot implements java.io.Serializable {
 		this.zip = zip;
 	}
 
-	@Column(name = "SpotType", nullable = false, length = 45)
+	@Column(name = "spotType", length = 45)
 	public String getSpotType() {
 		return this.spotType;
 	}
@@ -128,7 +151,7 @@ public class Spot implements java.io.Serializable {
 		this.spotType = spotType;
 	}
 
-	@Column(name = "RateHr", nullable = false, length = 45)
+	@Column(name = "rateHr", length = 45)
 	public String getRateHr() {
 		return this.rateHr;
 	}
@@ -137,7 +160,7 @@ public class Spot implements java.io.Serializable {
 		this.rateHr = rateHr;
 	}
 
-	@Column(name = "RateMonthly", nullable = false, length = 45)
+	@Column(name = "rateMonthly", length = 45)
 	public String getRateMonthly() {
 		return this.rateMonthly;
 	}
@@ -146,7 +169,7 @@ public class Spot implements java.io.Serializable {
 		this.rateMonthly = rateMonthly;
 	}
 
-	@Column(name = "Description", length = 500)
+	@Column(name = "description", length = 45)
 	public String getDescription() {
 		return this.description;
 	}
@@ -155,7 +178,7 @@ public class Spot implements java.io.Serializable {
 		this.description = description;
 	}
 
-	@Column(name = "CarSize")
+	@Column(name = "carSize")
 	public Integer getCarSize() {
 		return this.carSize;
 	}
@@ -163,37 +186,68 @@ public class Spot implements java.io.Serializable {
 	public void setCarSize(Integer carSize) {
 		this.carSize = carSize;
 	}
-	@Column(name = "X1")
-	public Double getX1() {
-		return x1;
-	}
 
-	public void setX1(Double x1) {
-		this.x1 = x1;
-	}
-	@Column(name = "Y1")
-	public Double getY1() {
-		return y1;
-	}
-
-	public void setY1(Double y1) {
-		this.y1 = y1;
-	}
-
+	@Column(name = "image", length = 200)
 	public String getImage() {
-		return image;
+		return this.image;
 	}
 
 	public void setImage(String image) {
 		this.image = image;
 	}
 
+	@Column(name = "x1", precision = 10, scale = 0)
+	public Long getX1() {
+		return this.x1;
+	}
+
+	public void setX1(Long x1) {
+		this.x1 = x1;
+	}
+
+	@Column(name = "y1", precision = 10, scale = 0)
+	public Long getY1() {
+		return this.y1;
+	}
+
+	public void setY1(Long y1) {
+		this.y1 = y1;
+	}
+
+	@Column(name = "spotBooked", length = 5)
 	public String getSpotBooked() {
-		return spotBooked;
+		return this.spotBooked;
 	}
 
 	public void setSpotBooked(String spotBooked) {
 		this.spotBooked = spotBooked;
+	}
+
+	@Column(name = "count")
+	public Integer getCount() {
+		return this.count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	@Column(name = "neighborhood", length = 45)
+	public String getNeighborhood() {
+		return this.neighborhood;
+	}
+
+	public void setNeighborhood(String neighborhood) {
+		this.neighborhood = neighborhood;
+	}
+
+	@Column(name = "spotOwnerUserId", nullable = false)
+	public int getSpotOwnerUserId() {
+		return this.spotOwnerUserId;
+	}
+
+	public void setSpotOwnerUserId(int spotOwnerUserId) {
+		this.spotOwnerUserId = spotOwnerUserId;
 	}
 
 }

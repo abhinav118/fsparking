@@ -7,38 +7,36 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sparking.hibernate.Txn;
 import com.sparking.hibernate.User;
 
 
-@Repository("userDAO")
-public class UserDAO {
+@Repository("txnDAO")
+public class TxnDAO {
 
 
 	@Autowired
-	private SessionFactory userSessionFactory;
+	private SessionFactory txnSessionFactory;
 	
-	private static final Logger log = Logger.getLogger(UserDAO.class);
+	private static final Logger log = Logger.getLogger(TxnDAO.class);
 	
 	@Transactional
-	public Integer saveUser(User user) {
+	public Integer saveTxn(Txn txn) {
 			
-			Integer userId = null;
+			Integer txnId = null;
 			SpotDAO spotDAO=new SpotDAO();
 			boolean userCanBook;
 			try{
 						
-				userId = (Integer) userSessionFactory.getCurrentSession().save(user);
+				txnId = (Integer) txnSessionFactory.getCurrentSession().save(txn);
 				log.debug("Booking spot");
-//				userCanBook=spotDAO.bookSpot(Integer.parseInt(user.getSpotId()));
-//				if(!userCanBook)
-//					return null;
 				
 			}catch (Exception e) {
 				log.debug("Exception occured while saving spot");
 				e.printStackTrace();
 			}
 			
-			return userId;
+			return txnId;
 	}
 	
 }

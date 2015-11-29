@@ -19,6 +19,7 @@
             <list>
                 <value>com.sparking.hibernate.Spot</value>
                  <value>com.sparking.hibernate.User</value>
+                 <value>com.sparking.hibernate.Txn</value>
             </list>
         </property>
     <property name="hibernateProperties">
@@ -47,8 +48,6 @@
         <property name="sessionFactory" ref="sparkingSessionFactory" />
         <property name="persistentClass" value="com.sparking.hibernate.Spot" />
     </bean>
-
-
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      DAO for USER objects 
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
