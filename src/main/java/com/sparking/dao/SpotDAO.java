@@ -1,5 +1,6 @@
 package com.sparking.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -65,6 +66,35 @@ public class SpotDAO {
 		return resultList;
 	}
 	
+
+
+	
+	@SuppressWarnings("unchecked")
+	public List<Spot> getAllSpotsThrufilter(String type, Date startTime, Date endTime) {
+		if(type==null && (startTime==null || endTime ==null))return getAllSpots();
+		
+		List<Spot> resultList = null;
+		Date currentDate=new Date();
+		String hql;
+		try{
+			
+			log.info("Listing all spots type:"+type+"dates st:/"+startTime+"/end:"+endTime);
+			//first booked
+			
+			hql = "FROM Spot where spotBooked = '' or spotBooked is null and spotType=:type and :startTime<"+currentDate+" and :endTime>"+currentDate;
+			
+			log.debug("getAllSpotsThrufilter Query:"+hql);
+			resultList = sessionFactory.getCurrentSession().createQuery(hql).list();
+			
+		}catch (Exception e) {
+			log.debug("Exception occured while getting all spot");
+			e.printStackTrace();
+		}
+		log.info("result:"+resultList);
+		return resultList;
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<Spot> getSpotsOrderByDistance(String x1, String y1) {
 		List<Spot> resultList = null;
@@ -123,6 +153,26 @@ public class SpotDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<Object> getSpotsForUserId(Integer userId) {
+		List<Object> resultList = null;
+		try{
+			//select * from spark.Spot s where s.spotId IN 
+			//(select t.spotId FROM spark.Txn t where t.userId=7);
+			
+			log.info("Listing all spots");
+			//String hql = "FROM Spot s WHERE s.spotId IN (select t.spotId FROM Txn t WHERE t.userId=:userId)";
+			String hql = "FROM Txn t WHERE t.userId=:userId)";
+			resultList = sessionFactory.getCurrentSession().createQuery(hql).setInteger("userId", userId).list();
+			
+		}catch (Exception e) {
+			log.debug("Exception occured while getting all spot");
+			e.printStackTrace();
+		}
+		log.info("result:"+resultList);
+		return resultList;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<Spot> getSpotsInZip(String zip) {
 		List<Spot> resultList = null;
 		try{
@@ -159,22 +209,47 @@ public class SpotDAO {
 		}
 		
 	}
+	
 	/**
 	 * Book spot with spot ID
 	 * @param spot
 	 * @return
 	 */
-	@Transactional
-	public Integer bookSpot(Spot spot){
+//	@Transactional
+	public Boolean isBooked(Spot spot){
+		
+		if(spot.getSpotBooked().equals("true"))
+			return true;
+		
+		
+		return 	false;
+		
+	}
 	
-	spot.setSpotBooked("true");
-	try{
-	sessionFactory.getCurrentSession().update(spot);
+	/**
+	 * Book spot with spot ID and set start time and end time
+	 * @param spot
+	 * @param startTime
+	 * @param endTime
+	 */
+	@Transactional
+	public void bookSpot(Spot spot, Date startTime, Date endTime){
+		
+		try{
+			spot.setSpotBooked("true");
+			spot.setStartTime(startTime);
+			spot.setEndTime(endTime);
+			spot.setLastBooked(new Date());
+			sessionFactory.getCurrentSession().update(spot);
+		}
+		catch(Exception e){
+			log.debug("Exception occured while updating spot time");
+			e.printStackTrace();
+			return ;
+		}
 	}
-	catch(Exception e){
-		return 0;
-	}
-	return 1;
-	}
+	
+	
+	
 
 }

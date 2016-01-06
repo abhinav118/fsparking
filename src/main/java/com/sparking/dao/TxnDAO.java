@@ -38,5 +38,9 @@ public class TxnDAO {
 			
 			return txnId;
 	}
+	//select * from spark.Spot s where s.spotId IN (select t.spotId FROM spark.Txn t where t.userId=7);
+	
+	
+	
 	
 }
